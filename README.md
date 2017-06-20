@@ -7,3 +7,5 @@ An open world head-to-head tank fight with simmple AI, terrain and advanced cont
 ## Lecture List
 --- 
 - BT01 Intro, Notes & Assets
+- BT02 BattleTank GDD
+- BT03 Setting up Github Repo
