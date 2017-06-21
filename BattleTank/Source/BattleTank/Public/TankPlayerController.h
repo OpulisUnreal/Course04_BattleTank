@@ -17,6 +17,13 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	
 	
 public:
+	UPROPERTY(EditAnywhere)
+		float CrossHairXLocation = 0.5;
+	UPROPERTY(EditAnywhere)
+		float CrossHairYLocation = 0.33333;
+	UPROPERTY(EditAnywhere)
+		float LineTraceRange = 1000000;
+	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	
@@ -29,4 +36,6 @@ private:
 
 	// Return an OUT parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookVectorHitLocation(FVector& LookDirection, FVector& OutHitLocation) const;
 };
