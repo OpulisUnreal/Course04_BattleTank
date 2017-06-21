@@ -58,16 +58,25 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
-	// Get Tank Rotation
-	// Calculate Barrel Offset Rotations
-		// Turret as yaw from AimDirection.(X|Y)
-		// Barrel as pitch from AimDirection.Z
-
 	// Work out difference between current Barrel rotation & AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
+	
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Turn(DeltaRotator.Yaw);
+
+	float intPart;
+	float fracPart = FMath::Modf(DeltaRotator.Yaw / 360.f, &intPart);
+	float Yaw = fracPart * 360.0f;
+	
+	if (Yaw > 180.0f) {
+		Yaw -= 360.0f;
+	}
+	else if (Yaw < -180.0f) {
+		Yaw += 360.0f;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("%s Turns turret with: %f"), *(GetOwner()->GetName()), Yaw);
+	Turret->Turn(Yaw);
 }

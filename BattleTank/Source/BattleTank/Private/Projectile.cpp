@@ -11,6 +11,7 @@ AProjectile::AProjectile()
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovementComponent"));
 	ProjectileMovement->bAutoActivate = false;
+	
 }
 
 // Called when the game starts or when spawned
@@ -30,4 +31,5 @@ void AProjectile::Tick(float DeltaTime)
 void AProjectile::LaunchProjectile(float Speed) {
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
+	ProjectileMovement->bShouldBounce = true;
 }
