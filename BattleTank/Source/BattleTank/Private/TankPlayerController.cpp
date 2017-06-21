@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
-
+#include "Tank.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -33,9 +33,6 @@ void ATankPlayerController::AimTowardsCrosshair() {
 
 	FVector HitLocation; // Out Parameter
 	if (GetSightRayHitLocation(HitLocation)) { // Has side-effect: is going to line trace
-		
-		
-		//TODO Tell ControlledTank to aim at this point
 		GetControlledTank()->AimAt(HitLocation);
 	}
 	
@@ -47,16 +44,17 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const{
 	// Find crosshair position in screen coordinates
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
-	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairYLocation, ViewportSizeY * CrossHairYLocation);
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 
 	// "De-Project" the screen position of the crosshair to a world direction
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) {
 		// Linetrace along look direction, and see what we hit (up to max range)
 		GetLookVectorHitLocation(LookDirection, HitLocation);
+		return true;
 	}
 
-	return true;
+	return false;
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const {
@@ -81,7 +79,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& LookDirection, FVe
 	{
 		// Set hit location
 		OutHitLocation = HitResult.Location;
-
 		return true;
 	}
 	OutHitLocation = FVector(0);
