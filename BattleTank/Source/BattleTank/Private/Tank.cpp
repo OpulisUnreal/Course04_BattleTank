@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Opulis Code SAS
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
