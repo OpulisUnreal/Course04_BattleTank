@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
+
+// Depends on TankMovementComponent via pathfinding system (ATankAIController::MoveToActor() -> TankMovementComponent::RequestDirectMove())
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
@@ -12,18 +14,20 @@ void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	
+	auto ControlledTank = GetPawn();
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 
-	if (PlayerTank) {
-		auto ControlledTank = Cast<ATank>(GetPawn());
+	if (ensure(PlayerTank && AimingComponent)) {
 		// Move towards the player
 		MoveToActor(PlayerTank, AcceptanceRadius);
 
 		// Aim towards the player
-		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+		AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
 		// Fire if ready
-		ControlledTank->Fire();
+		AimingComponent->Fire();
 	}
 	
 }
