@@ -92,19 +92,28 @@ void UTankAimingComponent::MoveBarrelTowards() {
 	
 	Barrel->Elevate(DeltaRotator.Pitch);
 
-	float intPart;
-	float fracPart = FMath::Modf(DeltaRotator.Yaw / 360.f, &intPart);
-	float Yaw = fracPart * 360.0f;
-	
-	if (Yaw > 180.0f) {
-		Yaw -= 360.0f;
+	if (FMath::Abs(DeltaRotator.Yaw) < 180) 
+	{
+		Turret->Turn(DeltaRotator.Yaw);
 	}
-	else if (Yaw < -180.0f) {
-		Yaw += 360.0f;
+	else 
+	{
+		Turret->Turn(-DeltaRotator.Yaw);
 	}
 
-	//UE_LOG(LogTemp, Warning, TEXT("%s Turns turret with: %f"), *(GetOwner()->GetName()), Yaw);
-	Turret->Turn(Yaw);
+	//float intPart;
+	//float fracPart = FMath::Modf(DeltaRotator.Yaw / 360.f, &intPart);
+	//float Yaw = fracPart * 360.0f;
+	//
+	//if (Yaw > 180.0f) {
+	//	Yaw -= 360.0f;
+	//}
+	//else if (Yaw < -180.0f) {
+	//	Yaw += 360.0f;
+	//}
+
+	////UE_LOG(LogTemp, Warning, TEXT("%s Turns turret with: %f"), *(GetOwner()->GetName()), Yaw);
+	//Turret->Turn(Yaw);
 }
 
 void UTankAimingComponent::Fire() {
