@@ -71,6 +71,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 	
 }
 
+EFiringStatus UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 void UTankAimingComponent::MoveBarrelTowards() {
 	if (!ensure(Barrel && Turret)) { return; }
 

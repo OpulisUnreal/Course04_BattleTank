@@ -19,7 +19,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
+protected:
 	// How close can the Enemy Tank get
-	UPROPERTY(EditDefaultsOnly)
-		float AcceptanceRadius = 3000;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float AcceptanceRadius = 10000;
 };
