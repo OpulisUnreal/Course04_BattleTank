@@ -38,7 +38,7 @@ public:
 		float ReloadTimeInSeconds = 3;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		int MaxAmmo = 3;
+		int32 MaxAmmo = 3;
 		
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -55,7 +55,7 @@ protected:
 		EFiringStatus FiringState = EFiringStatus::Reloading;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		int Ammo = MaxAmmo;
+		int32 Ammo = MaxAmmo;
 private:
 	UTankAimingComponent();
 
