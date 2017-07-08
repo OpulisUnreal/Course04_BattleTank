@@ -13,7 +13,8 @@ enum class EFiringStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 // Forward Declaration
@@ -36,6 +37,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeInSeconds = 3;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		int MaxAmmo = 3;
+		
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
@@ -50,6 +54,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringStatus FiringState = EFiringStatus::Reloading;
 
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+		int Ammo = MaxAmmo;
 private:
 	UTankAimingComponent();
 
@@ -66,4 +72,6 @@ private:
 	double LastFireTime = 0;
 
 	FVector AimDirection;
+
+	
 };
