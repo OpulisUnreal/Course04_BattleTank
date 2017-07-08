@@ -1,16 +1,22 @@
 // Copyright Opulis Code SAS
 
 #include "Tank.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+
+	//DeathFire = CreateDefaultSubobject<UParticleSystemComponent>(FName("DeathFire"));
+	//DeathFire->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void ATank::BeginPlay() {
 	Super::BeginPlay();
+
+	CurrentHealth = StartingHealth;
 }
 
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
@@ -28,8 +34,6 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 	{
 		OnDeath.Broadcast();
 	}
-
-	
 
 	return DamageToApply;
 }
